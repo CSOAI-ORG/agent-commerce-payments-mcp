@@ -1,0 +1,9 @@
+author: MEOK AI Labs
+description: Agent Commerce Payments MCP Server
+license: MIT
+name: agent-commerce-payments-mcp
+repository: https://github.com/CSOAI-ORG/agent-commerce-payments-mcp
+tools:
+- description: See server.py
+  name: tool
+version: 1.0.0
