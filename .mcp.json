@@ -1,9 +1,105 @@
 {
   "name": "agent-commerce-payments-mcp",
-  "description": "Agent Commerce Payments MCP Server by MEOK AI Labs",
+  "description": "By **MEOK AI Labs** | https://meok.ai",
   "version": "1.0.0",
-  "author": "MEOK AI Labs",
-  "license": "MIT",
-  "repository": "https://github.com/CSOAI-ORG/agent-commerce-payments-mcp",
-  "install": "pip install mcp && python server.py"
+  "tools": [
+    {
+      "name": "create_invoice",
+      "description": "",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "from_agent": {
+            "type": "string"
+          },
+          "to_agent": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_agent",
+          "to_agent",
+          "amount"
+        ]
+      }
+    },
+    {
+      "name": "process_payment",
+      "description": "",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "invoice_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "invoice_id"
+        ]
+      }
+    },
+    {
+      "name": "escrow_funds",
+      "description": "",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agent_a": {
+            "type": "string"
+          },
+          "agent_b": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "agent_a",
+          "agent_b",
+          "amount"
+        ]
+      }
+    },
+    {
+      "name": "release_escrow",
+      "description": "",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "escrow_id": {
+            "type": "string"
+          },
+          "to_agent": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "escrow_id",
+          "to_agent"
+        ]
+      }
+    },
+    {
+      "name": "payment_history",
+      "description": "",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent_id"
+        ]
+      }
+    }
+  ]
 }

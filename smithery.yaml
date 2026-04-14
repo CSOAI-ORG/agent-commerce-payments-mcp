@@ -1,9 +1,52 @@
-author: MEOK AI Labs
-description: Agent Commerce Payments MCP Server
-license: MIT
 name: agent-commerce-payments-mcp
-repository: https://github.com/CSOAI-ORG/agent-commerce-payments-mcp
-tools:
-- description: See server.py
-  name: tool
+description: By **MEOK AI Labs** | https://meok.ai
 version: 1.0.0
+tools:
+- name: create_invoice
+  description: ''
+  parameters:
+  - name: from_agent
+    type: string
+    required: true
+  - name: to_agent
+    type: string
+    required: true
+  - name: amount
+    type: number
+    required: true
+  - name: currency
+    type: string
+    required: false
+- name: process_payment
+  description: ''
+  parameters:
+  - name: invoice_id
+    type: string
+    required: true
+- name: escrow_funds
+  description: ''
+  parameters:
+  - name: agent_a
+    type: string
+    required: true
+  - name: agent_b
+    type: string
+    required: true
+  - name: amount
+    type: number
+    required: true
+- name: release_escrow
+  description: ''
+  parameters:
+  - name: escrow_id
+    type: string
+    required: true
+  - name: to_agent
+    type: string
+    required: true
+- name: payment_history
+  description: ''
+  parameters:
+  - name: agent_id
+    type: string
+    required: true
