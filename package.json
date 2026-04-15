@@ -1,7 +1,7 @@
 {
   "name": "agent-commerce-payments-mcp",
   "version": "1.0.0",
-  "description": "Agent Commerce Payments MCP Server by MEOK AI Labs",
+  "description": "MCP server for agent commerce payments. Features create invoice, process payment, escrow funds. From MEOK AI Labs.",
   "main": "server.py",
   "scripts": {
     "start": "python server.py"

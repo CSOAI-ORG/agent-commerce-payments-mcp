@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 [project]
 name = "agent-commerce-payments-mcp"
 version = "1.0.0"
-description = "MEOK AI Labs — agent-commerce-payments-mcp"
+description = "MCP server for agent commerce payments. Features create invoice, process payment, escrow funds. From MEOK AI Labs."
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
 authors = [{name = "MEOK AI Labs", email = "nicholas@meok.ai"}]
