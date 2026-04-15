@@ -3,7 +3,8 @@ description: MEOK AI Labs MCP Server
 version: 1.0.0
 tools:
 - name: create_invoice
-  description: ''
+  description: Create an invoice for a commerce transaction with line items, tax,
+    and payment terms.
   parameters:
   - name: from_agent
     type: string
@@ -18,13 +19,15 @@ tools:
     type: string
     required: false
 - name: process_payment
-  description: ''
+  description: Process a payment between buyer and seller with fraud checks and fee
+    calculation.
   parameters:
   - name: invoice_id
     type: string
     required: true
 - name: escrow_funds
-  description: ''
+  description: Place funds in escrow for a transaction, holding until conditions are
+    met.
   parameters:
   - name: agent_a
     type: string
@@ -36,7 +39,7 @@ tools:
     type: number
     required: true
 - name: release_escrow
-  description: ''
+  description: Release escrowed funds to the seller after conditions are verified.
   parameters:
   - name: escrow_id
     type: string
@@ -45,7 +48,7 @@ tools:
     type: string
     required: true
 - name: payment_history
-  description: ''
+  description: Get payment history for a user or transaction, with filtering and totals.
   parameters:
   - name: agent_id
     type: string

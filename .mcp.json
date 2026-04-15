@@ -5,7 +5,7 @@
   "tools": [
     {
       "name": "create_invoice",
-      "description": "",
+      "description": "Create an invoice for a commerce transaction with line items, tax, and payment terms.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -31,7 +31,7 @@
     },
     {
       "name": "process_payment",
-      "description": "",
+      "description": "Process a payment between buyer and seller with fraud checks and fee calculation.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -46,7 +46,7 @@
     },
     {
       "name": "escrow_funds",
-      "description": "",
+      "description": "Place funds in escrow for a transaction, holding until conditions are met.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -69,7 +69,7 @@
     },
     {
       "name": "release_escrow",
-      "description": "",
+      "description": "Release escrowed funds to the seller after conditions are verified.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -88,7 +88,7 @@
     },
     {
       "name": "payment_history",
-      "description": "",
+      "description": "Get payment history for a user or transaction, with filtering and totals.",
       "parameters": {
         "type": "object",
         "properties": {

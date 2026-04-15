@@ -24,6 +24,7 @@ _ESCROW: dict = {}
 
 @mcp.tool()
 def create_invoice(from_agent: str, to_agent: str, amount: float, currency: str = "GBP", api_key: str = "") -> str:
+    """Create an invoice for a commerce transaction with line items, tax, and payment terms."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -35,6 +36,7 @@ def create_invoice(from_agent: str, to_agent: str, amount: float, currency: str 
 
 @mcp.tool()
 def process_payment(invoice_id: str, api_key: str = "") -> str:
+    """Process a payment between buyer and seller with fraud checks and fee calculation."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -48,6 +50,7 @@ def process_payment(invoice_id: str, api_key: str = "") -> str:
 
 @mcp.tool()
 def escrow_funds(agent_a: str, agent_b: str, amount: float, api_key: str = "") -> str:
+    """Place funds in escrow for a transaction, holding until conditions are met."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -59,6 +62,7 @@ def escrow_funds(agent_a: str, agent_b: str, amount: float, api_key: str = "") -
 
 @mcp.tool()
 def release_escrow(escrow_id: str, to_agent: str, api_key: str = "") -> str:
+    """Release escrowed funds to the seller after conditions are verified."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -73,6 +77,7 @@ def release_escrow(escrow_id: str, to_agent: str, api_key: str = "") -> str:
 
 @mcp.tool()
 def payment_history(agent_id: str, api_key: str = "") -> str:
+    """Get payment history for a user or transaction, with filtering and totals."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
