@@ -6,27 +6,39 @@ sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
 
 import json, uuid, time
+from datetime import datetime, timezone
+from collections import defaultdict
 from mcp.server.fastmcp import FastMCP
-mcp = FastMCP("agent-commerce-payments-mcp")
+mcp = FastMCP("agent-commerce-payments", instructions="MEOK AI Labs MCP Server")
+
+FREE_DAILY_LIMIT = 15
+_usage = defaultdict(list)
+def _rl(c="anon"):
+    now = datetime.now(timezone.utc)
+    _usage[c] = [t for t in _usage[c] if (now-t).total_seconds() < 86400]
+    if len(_usage[c]) >= FREE_DAILY_LIMIT: return json.dumps({"error": f"Limit {FREE_DAILY_LIMIT}/day"})
+    _usage[c].append(now); return None
 
 _PAYMENTS: dict = {}
 _ESCROW: dict = {}
 
-@mcp.tool(name="create_invoice")
-async def create_invoice(from_agent: str, to_agent: str, amount: float, currency: str = "GBP", api_key: str = "") -> str:
+@mcp.tool()
+def create_invoice(from_agent: str, to_agent: str, amount: float, currency: str = "GBP", api_key: str = "") -> str:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     inv_id = str(uuid.uuid4())[:16]
     _PAYMENTS[inv_id] = {"from": from_agent, "to": to_agent, "amount": amount, "currency": currency, "status": "pending", "ts": time.time()}
     return {"invoice_id": inv_id, "amount": amount, "currency": currency, "status": "pending"}
 
-@mcp.tool(name="process_payment")
-async def process_payment(invoice_id: str, api_key: str = "") -> str:
+@mcp.tool()
+def process_payment(invoice_id: str, api_key: str = "") -> str:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     p = _PAYMENTS.get(invoice_id)
     if not p:
@@ -34,21 +46,23 @@ async def process_payment(invoice_id: str, api_key: str = "") -> str:
     p["status"] = "paid"
     return {"invoice_id": invoice_id, "status": "paid", "settled_at": time.time()}
 
-@mcp.tool(name="escrow_funds")
-async def escrow_funds(agent_a: str, agent_b: str, amount: float, api_key: str = "") -> str:
+@mcp.tool()
+def escrow_funds(agent_a: str, agent_b: str, amount: float, api_key: str = "") -> str:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     escrow_id = str(uuid.uuid4())[:16]
     _ESCROW[escrow_id] = {"agent_a": agent_a, "agent_b": agent_b, "amount": amount, "status": "held"}
     return {"escrow_id": escrow_id, "status": "held", "amount": amount}
 
-@mcp.tool(name="release_escrow")
-async def release_escrow(escrow_id: str, to_agent: str, api_key: str = "") -> str:
+@mcp.tool()
+def release_escrow(escrow_id: str, to_agent: str, api_key: str = "") -> str:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     e = _ESCROW.get(escrow_id)
     if not e:
@@ -57,11 +71,12 @@ async def release_escrow(escrow_id: str, to_agent: str, api_key: str = "") -> st
     e["recipient"] = to_agent
     return {"escrow_id": escrow_id, "status": "released", "to": to_agent}
 
-@mcp.tool(name="payment_history")
-async def payment_history(agent_id: str, api_key: str = "") -> str:
+@mcp.tool()
+def payment_history(agent_id: str, api_key: str = "") -> str:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     sent = [p for p in _PAYMENTS.values() if p["from"] == agent_id]
     received = [p for p in _PAYMENTS.values() if p["to"] == agent_id]
