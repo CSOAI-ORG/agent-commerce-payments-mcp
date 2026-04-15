@@ -1,0 +1,58 @@
+{
+  "name": "agent-commerce-payments",
+  "description": "MEOK AI Labs \u2014 Agent-to-agent commerce, invoicing, payments, and escrow.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/agent-commerce-payments-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "create_invoice",
+      "description": "Create a detailed invoice with line items, tax calculation, fees, and payment terms."
+    },
+    {
+      "name": "process_payment",
+      "description": "Process payment for an invoice with fraud checks, fee calculation, and settlement."
+    },
+    {
+      "name": "escrow_funds",
+      "description": "Place funds in escrow between two agents with conditions and expiry."
+    },
+    {
+      "name": "release_escrow",
+      "description": "Release escrowed funds to the designated agent after condition verification."
+    },
+    {
+      "name": "payment_history",
+      "description": "Get payment history for an agent with filtering, totals, and transaction summary."
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning",
+    "Agent Infrastructure",
+    "Finance & Fintech"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
