@@ -22,3 +22,6 @@ Repository = "https://github.com/CSOAI-ORG/agent-commerce-payments-mcp"
 [tool.hatch.build.targets.wheel]
 packages = ["."]
 only-include = ["server.py"]
+
+[project.scripts]
+agent_commerce_payments_mcp = "server:main"
