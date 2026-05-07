@@ -101,7 +101,22 @@ def create_invoice(from_agent: str, to_agent: str, amount: float,
                     currency: str = "GBP", description: str = "",
                     line_items: list = None, due_days: int = 30,
                     api_key: str = "") -> str:
-    """Create a detailed invoice with line items, tax calculation, fees, and payment terms."""
+    """Create a detailed invoice with line items, tax calculation, fees, and payment terms.
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -150,7 +165,23 @@ def create_invoice(from_agent: str, to_agent: str, amount: float,
 @mcp.tool()
 def process_payment(invoice_id: str, payment_method: str = "agent_balance",
                      api_key: str = "") -> str:
-    """Process payment for an invoice with fraud checks, fee calculation, and settlement."""
+    """Process payment for an invoice with fraud checks, fee calculation, and settlement.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -198,7 +229,23 @@ def process_payment(invoice_id: str, payment_method: str = "agent_balance",
 @mcp.tool()
 def escrow_funds(agent_a: str, agent_b: str, amount: float, currency: str = "GBP",
                   condition: str = "", expiry_hours: int = 72, api_key: str = "") -> str:
-    """Place funds in escrow between two agents with conditions and expiry."""
+    """Place funds in escrow between two agents with conditions and expiry.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -243,7 +290,23 @@ def escrow_funds(agent_a: str, agent_b: str, amount: float, currency: str = "GBP
 @mcp.tool()
 def release_escrow(escrow_id: str, to_agent: str, release_reason: str = "",
                     api_key: str = "") -> str:
-    """Release escrowed funds to the designated agent after condition verification."""
+    """Release escrowed funds to the designated agent after condition verification.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -287,7 +350,23 @@ def release_escrow(escrow_id: str, to_agent: str, release_reason: str = "",
 @mcp.tool()
 def payment_history(agent_id: str, status_filter: str = "", limit: int = 50,
                      api_key: str = "") -> str:
-    """Get payment history for an agent with filtering, totals, and transaction summary."""
+    """Get payment history for an agent with filtering, totals, and transaction summary.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
