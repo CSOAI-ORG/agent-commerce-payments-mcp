@@ -1,3 +1,5 @@
+[![agent-commerce-payments-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/agent-commerce-payments-mcp/badges/card.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/agent-commerce-payments-mcp)
+
 <div align="center">
 
 [![GitHub stars](https://img.shields.io/github/stars/CSOAI-ORG/agent-commerce-payments-mcp)](https://github.com/CSOAI-ORG/agent-commerce-payments-mcp/stargazers)
