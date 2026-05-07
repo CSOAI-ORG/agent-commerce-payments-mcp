@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "agent-commerce-payments-mcp"
-version = "1.0.3"
+version = "1.0.4"
 readme = "README.md"
 description = "MCP server for agent commerce payments. Features create invoice, process payment, escrow funds. From MEOK AI Labs."
 license = {file = "LICENSE"}
