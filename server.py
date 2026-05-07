@@ -116,6 +116,17 @@ def create_invoice(from_agent: str, to_agent: str, amount: float,
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        from_agent (str): The from agent to analyze or process.
+        to_agent (str): The to agent to analyze or process.
+        amount (float): The amount to analyze or process.
+        currency (str): The currency to analyze or process.
+        description (str): The description to analyze or process.
+        line_items (list): The line items to analyze or process.
+        due_days (int): The due days to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -195,6 +206,12 @@ def process_payment(invoice_id: str, payment_method: str = "agent_balance",
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        invoice_id (str): The invoice id to analyze or process.
+        payment_method (str): The payment method to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -273,6 +290,16 @@ def escrow_funds(agent_a: str, agent_b: str, amount: float, currency: str = "GBP
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        agent_a (str): The agent a to analyze or process.
+        agent_b (str): The agent b to analyze or process.
+        amount (float): The amount to analyze or process.
+        currency (str): The currency to analyze or process.
+        condition (str): The condition to analyze or process.
+        expiry_hours (int): The expiry hours to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -348,6 +375,13 @@ def release_escrow(escrow_id: str, to_agent: str, release_reason: str = "",
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        escrow_id (str): The escrow id to analyze or process.
+        to_agent (str): The to agent to analyze or process.
+        release_reason (str): The release reason to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -422,6 +456,13 @@ def payment_history(agent_id: str, status_filter: str = "", limit: int = 50,
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        agent_id (str): The agent id to analyze or process.
+        status_filter (str): The status filter to analyze or process.
+        limit (int): The limit to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
