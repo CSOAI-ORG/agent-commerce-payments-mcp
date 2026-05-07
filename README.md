@@ -1,3 +1,7 @@
+[![agent-commerce-payments-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/agent-commerce-payments-mcp/badges/score.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/agent-commerce-payments-mcp)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-Published-green)](https://registry.modelcontextprotocol.io)
+[![PyPI](https://img.shields.io/pypi/v/agent-commerce-payments-mcp)](https://pypi.org/project/agent-commerce-payments-mcp/)
+
 [![agent-commerce-payments-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/agent-commerce-payments-mcp/badges/card.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/agent-commerce-payments-mcp)
 
 <div align="center">
