@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Agent Commerce & Payments MCP Server — UCP/AP2 style agent-to-agent payments."""
+"""
+Agent Commerce & Payments MCP Server — UCP/AP2 style agent-to-agent payments."""
 
 import sys, os
-sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
 
 import json, uuid, time, hashlib
@@ -144,7 +144,7 @@ def create_invoice(from_agent: str, to_agent: str, amount: float,
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     if currency not in SUPPORTED_CURRENCIES:
@@ -229,7 +229,7 @@ def process_payment(invoice_id: str, payment_method: str = "agent_balance",
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     inv = _PAYMENTS.get(invoice_id)
@@ -317,7 +317,7 @@ def escrow_funds(agent_a: str, agent_b: str, amount: float, currency: str = "GBP
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     if amount <= 0:
@@ -399,7 +399,7 @@ def release_escrow(escrow_id: str, to_agent: str, release_reason: str = "",
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     esc = _ESCROW.get(escrow_id)
@@ -480,7 +480,7 @@ def payment_history(agent_id: str, status_filter: str = "", limit: int = 50,
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     sent = []
@@ -523,5 +523,8 @@ def payment_history(agent_id: str, status_filter: str = "", limit: int = 50,
     }
 
 
-if __name__ == "__main__":
+def main():
     mcp.run()
+
+if __name__ == '__main__':
+    main()

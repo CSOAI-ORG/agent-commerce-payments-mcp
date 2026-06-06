@@ -1,0 +1,9 @@
+# agent-commerce-payments-mcp - Auto-trigger Rules
+
+When the user asks about agent commerce payments, use agent-commerce-payments-mcp tools: create_invoice, process_payment, escrow_funds, release_escrow, payment_history
+
+**MCP server for agent commerce payments mcp operations**
+
+Install: `pip install agent-commerce-payments-mcp`
+
+By MEOK AI Labs — MIT licensed.

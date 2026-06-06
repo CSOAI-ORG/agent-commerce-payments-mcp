@@ -1,0 +1,36 @@
+# agent-commerce-payments-mcp
+# **MCP server for agent commerce payments mcp operations**
+
+## Install
+```bash
+pip install agent-commerce-payments-mcp
+```
+
+## Auth & Rate Limits
+- Free tier: 10 calls/day. No API key required.
+- Pro tier (£79/mo): unlimited + signed attestations.
+- Enterprise (£1,499/mo): white-label.
+
+## Tools
+
+### `create_invoice`
+Create a detailed invoice with line items, tax calculation, fees, and payment terms.
+
+### `process_payment`
+Process payment for an invoice with fraud checks, fee calculation, and settlement.
+
+### `escrow_funds`
+Place funds in escrow between two agents with conditions and expiry.
+
+### `release_escrow`
+Release escrowed funds to the designated agent after condition verification.
+
+### `payment_history`
+Get payment history for an agent with filtering, totals, and transaction summary.
+
+
+## Maintainer
+MEOK AI Labs · hello@meok.ai · https://meok.ai · MIT licensed
+
+## Pairs with
+Governance moat: pair this tool with any of MEOK's 38 governance MCPs (EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, etc.) for full compliance coverage.

@@ -1,55 +1,174 @@
-import os
+#!/usr/bin/env python3
 import sys
-import unittest
+import os
+import json
+import pytest
 
-# Ensure shared auth middleware is available
-sys.path.insert(0, os.path.expanduser("~/clawd/meok-labs-engine/shared"))
-os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
-
-
-class TestMCPImport(unittest.TestCase):
-    def test_import_server(self):
-        """Server module must import without errors."""
-        import server  # noqa: F401
-
-    def test_mcp_or_server_object_exists(self):
-        """FastMCP servers export 'mcp'; low-level servers export 'server'."""
-        import server as srv
-        self.assertTrue(
-            hasattr(srv, "mcp") or hasattr(srv, "server"),
-            "Expected 'mcp' or 'server' object in server.py",
-        )
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+_shared_auth = os.path.expanduser("~/clawd/meok-labs-engine/shared")
+if os.path.isdir(_shared_auth):
+    sys.path.insert(0, _shared_auth)
 
 
-class TestAuthMiddleware(unittest.TestCase):
-    def test_check_access_allows_empty_key_as_free_tier(self):
-        """Empty API key maps to FREE tier and is allowed."""
-        from auth_middleware import check_access, Tier
-        allowed, msg, tier = check_access("")
-        self.assertTrue(allowed)
-        self.assertEqual(tier, Tier.FREE)
-        self.assertIsInstance(msg, str)
+import server
 
-    def test_check_access_returns_tuple(self):
-        """check_access must return a 3-tuple."""
-        from auth_middleware import check_access
-        result = check_access("")
-        self.assertIsInstance(result, tuple)
-        self.assertEqual(len(result), 3)
+# Bypass shared auth rate limiting for tests
+server.check_access = lambda api_key="": (True, "test", "pro")
 
 
-class TestHealthEndpoint(unittest.TestCase):
-    def test_health_url_resolves(self):
-        """Wrapper must expose /health."""
-        import urllib.request
-        # Note: this test requires the wrapper to be running on port 8000.
-        # It is skipped in CI unless the server is active.
-        try:
-            resp = urllib.request.urlopen("http://localhost:8000/health", timeout=2)
-            self.assertEqual(resp.status, 200)
-        except Exception as e:
-            self.skipTest(f"Server not running: {e}")
+def test_server_module_imports():
+    assert server is not None
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_mcp_object_exists():
+    import server
+    assert hasattr(server, "mcp")
+
+
+def test_tools_registered():
+    import server
+    expected = [
+        "create_invoice",
+        "process_payment",
+        "escrow_funds",
+        "release_escrow",
+        "payment_history",
+    ]
+    for name in expected:
+        assert hasattr(server, name), f"Missing tool: {name}"
+        assert callable(getattr(server, name))
+
+
+def test_main_function():
+    import server
+    assert hasattr(server, "main")
+    assert callable(server.main)
+
+
+def test_create_invoice():
+    import server
+    result = server.create_invoice(
+        from_agent="agent-alpha",
+        to_agent="agent-beta",
+        amount=100.0,
+        currency="GBP",
+        description="Consulting services",
+    )
+    assert isinstance(result, dict)
+    assert result.get("invoice_id", "").startswith("INV-")
+    assert result["from_agent"] == "agent-alpha"
+    assert result["to_agent"] == "agent-beta"
+    assert result["currency"] == "GBP"
+    assert result["total"] > 0
+    assert result["status"] == "pending"
+
+
+def test_create_invoice_with_line_items():
+    import server
+    result = server.create_invoice(
+        from_agent="a",
+        to_agent="b",
+        amount=250.0,
+        line_items=[
+            {"description": "Setup fee", "amount": 100, "quantity": 1},
+            {"description": "Monthly subscription", "amount": 150, "quantity": 1},
+        ],
+    )
+    assert isinstance(result, dict)
+    assert "invoice_id" in result
+
+
+def test_create_invoice_invalid_currency():
+    import server
+    result = server.create_invoice(
+        from_agent="a",
+        to_agent="b",
+        amount=50,
+        currency="XYZ",
+    )
+    assert isinstance(result, dict)
+    assert "error" in result
+
+
+def test_create_invoice_negative_amount():
+    import server
+    result = server.create_invoice(
+        from_agent="a",
+        to_agent="b",
+        amount=-10,
+    )
+    assert isinstance(result, dict)
+    assert "error" in result
+
+
+def test_process_payment_not_found():
+    import server
+    result = server.process_payment(invoice_id="INV-NONEXISTENT")
+    assert isinstance(result, dict)
+    assert "error" in result
+    assert "Invoice not found" in str(result)
+
+
+def test_create_invoice_then_process_payment():
+    import server
+    inv = server.create_invoice(
+        from_agent="agent-pay",
+        to_agent="agent-collect",
+        amount=50.0,
+    )
+    invoice_id = inv["invoice_id"]
+    result = server.process_payment(invoice_id=invoice_id)
+    assert isinstance(result, dict)
+    assert result.get("status") == "paid"
+    assert "tx_id" in result
+
+
+def test_escrow_funds():
+    import server
+    result = server.escrow_funds(
+        agent_a="agent-alpha",
+        agent_b="agent-beta",
+        amount=500.0,
+        condition="Service delivery confirmed",
+    )
+    assert isinstance(result, dict)
+    assert result.get("escrow_id", "").startswith("ESC-")
+    assert result["status"] == "held"
+    assert result["amount"] == 500.0
+
+
+def test_release_escrow_not_found():
+    import server
+    result = server.release_escrow(
+        escrow_id="ESC-NONEXISTENT",
+        to_agent="agent-alpha",
+    )
+    assert isinstance(result, dict)
+    assert "error" in result
+
+
+def test_escrow_full_flow():
+    import server
+    escrow = server.escrow_funds(
+        agent_a="alice",
+        agent_b="bob",
+        amount=100.0,
+    )
+    escrow_id = escrow["escrow_id"]
+    result = server.release_escrow(
+        escrow_id=escrow_id,
+        to_agent="bob",
+        release_reason="Work completed",
+    )
+    assert isinstance(result, dict)
+    assert result["status"] == "released"
+    assert result["released_to"] == "bob"
+
+
+def test_payment_history():
+    import server
+    result = server.payment_history(agent_id="agent-alpha")
+    assert isinstance(result, dict)
+    assert "agent_id" in result
+    assert "summary" in result
+    assert result["agent_id"] == "agent-alpha"

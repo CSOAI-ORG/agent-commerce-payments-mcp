@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "agent-commerce-payments-mcp"
-version = "1.0.4"
+version = "1.0.6"
 readme = "README.md"
 description = "MCP server for agent commerce payments. Features create invoice, process payment, escrow funds. From MEOK AI Labs."
 license = {file = "LICENSE"}
@@ -22,7 +22,7 @@ Homepage = "https://meok.ai"
 Repository = "https://github.com/CSOAI-ORG/agent-commerce-payments-mcp"
 [tool.hatch.build.targets.wheel]
 packages = ["."]
-only-include = ["server.py"]
+only-include = ["server.py", "auth_middleware.py"]
 
 [project.scripts]
 agent_commerce_payments_mcp = "server:main"
