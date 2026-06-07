@@ -1,0 +1,23 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "agent-commerce-payments-mcp",
+    "description": "Agent Commerce Payments MCP Server by MEOK AI Labs",
+    "version": "1.0.6",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "agent-commerce-payments-mcp"
+      }
+    ],
+    "capabilities": [
+      "create_invoice",
+      "process_payment",
+      "escrow_funds",
+      "release_escrow",
+      "payment_history"
+    ]
+  }
+}
