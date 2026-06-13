@@ -4,9 +4,9 @@
   "version": "1.0.9",
   "description": "Agent Commerce Payments MCP Server by MEOK AI Labs",
   "repository": {
-    "type": "git",
     "url": "https://github.com/CSOAI-ORG/agent-commerce-payments-mcp",
-    "source": "https://github.com/CSOAI-ORG/agent-commerce-payments-mcp"
+    "source": "github",
+    "id": "1210329837"
   },
   "packages": [
     {
