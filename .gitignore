@@ -5,3 +5,6 @@ __pycache__/
 build/
 
 .vercel
+
+# Auto-added during alignment sweep
+dist/
